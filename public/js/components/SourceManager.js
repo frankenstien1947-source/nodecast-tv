@@ -62,10 +62,10 @@ class SourceManager {
           <div class="source-url">${source.url}</div>
         </div>
         <div class="source-actions">
-          <button class="btn btn-sm btn-secondary" data-action="refresh" title="Refresh Data">${Icons.play}</button>
-          <button class="btn btn-sm btn-secondary" data-action="test" title="Test Connection">${Icons.search}</button>
+          <button class="btn btn-sm btn-secondary" data-action="refresh" title="Refresh Data">${Icons.refresh}</button>
+          <button class="btn btn-sm btn-secondary" data-action="test" title="Test Connection">${Icons.link}</button>
           <button class="btn btn-sm btn-secondary" data-action="toggle" title="${source.enabled ? 'Disable' : 'Enable'}">
-            ${source.enabled ? Icons.favorite : Icons.favoriteOutline}
+            ${source.enabled ? Icons.check : Icons.circle}
           </button>
           <button class="btn btn-sm btn-secondary" data-action="edit" title="Edit">${Icons.settings}</button>
           <button class="btn btn-sm btn-danger" data-action="delete" title="Delete">${Icons.close}</button>
@@ -294,7 +294,8 @@ class SourceManager {
             const btn = document.querySelector(`.source-item[data-id="${id}"] [data-action="refresh"]`);
             if (btn) {
                 btn.disabled = true;
-                btn.innerHTML = '<div class="loading-spinner" style="width:1em;height:1em;border-width:2px"></div>';
+                const icon = btn.querySelector('.icon');
+                if (icon) icon.classList.add('spin');
             }
 
             // Clear cache for this source first
@@ -322,7 +323,8 @@ class SourceManager {
 
             if (btn) {
                 btn.disabled = false;
-                btn.innerHTML = Icons.play;
+                const icon = btn.querySelector('.icon');
+                if (icon) icon.classList.remove('spin');
             }
         } catch (err) {
             console.error('Error refreshing source:', err);
